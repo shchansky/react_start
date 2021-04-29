@@ -1,0 +1,24 @@
+.nav{
+    grid-area: nav;
+    background-color: burlywood;
+    text-align: center;  
+    padding: 20px;
+  }
+ 
+  .item {
+      color: red;
+    }
+
+    .item a{
+      text-decoration: none;;
+    }
+    .item.excretion a{
+      color: mediumvioletred;
+      font-weight: bold;
+      
+    }
+
+    .item a.activeLink{
+      color: green;
+      text-decoration: underline;
+    }

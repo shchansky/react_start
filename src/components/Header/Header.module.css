@@ -1,0 +1,19 @@
+
+
+
+.header {
+    grid-area: header;
+    background-color: grey;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: indigo;
+    
+  }
+  
+  .header img {
+    display: block;
+    width: 100px;
+    height: 100px;  
+    
+  }

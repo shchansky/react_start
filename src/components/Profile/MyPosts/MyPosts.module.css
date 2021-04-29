@@ -1,0 +1,13 @@
+.postsBlock {
+    padding: 10px;
+}
+
+.postsBlock textarea {
+    resize: none;
+    width: 200px;
+    min-height: 50px;
+}
+
+.posts {
+    margin-top: 100px;
+}
