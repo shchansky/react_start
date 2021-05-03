@@ -5,7 +5,7 @@ import classes from './../Dialogs.module.css'
 
 const Message = (props) => {
   return (
-    <div className={classes.dialog}>{props.message}</div>
+    <div className={classes.dialogs}>{props.message}</div>
   )
 }
 

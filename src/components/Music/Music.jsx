@@ -1,5 +1,4 @@
 import React from 'react';
-import './Music.module.css'
 import classes from './Music.module.css'
 
 

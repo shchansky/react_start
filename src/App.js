@@ -10,6 +10,7 @@ import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 
 
+
 import { BrowserRouter, Route } from 'react-router-dom';
 
 
@@ -33,35 +34,28 @@ const App = (props) => {
           <Route path='/music' component={Music} />
           <Route path='/settings' component={Settings} />    альтернатива записи кода вмнсто render*/}
 
-
-
-
-
-
-
           {/* <Route path='/profile' render={ () => <Profile posts={props.posts} />} />
           <Route path='/dialogs' render={ () => <Dialogs dialogs={props.dialogs} messages={props.messages}/>} /> */}
 
 
 
 
-
-
-
           {/* <Route path='/profile' render={ () => <Profile posts={props.state.profilePage.posts} />} /> */}
-          <Route path='/profile' render={ () => <Profile state={props.state.profilePage} />} />
+
+          <Route path='/profile' 
+          render={ () => <Profile 
+          state={props.state.profilePage} 
+          addPost={props.addPost}/>} />
+
+          
           {/* <Route path='/profile' render={ () => <Profile state={props["state"]["profilePage"]} />} />   ---альтернативное обращение к занчениям(данным) ассоциативного  масива (props) через ключи (свойсва) state и profilePage*/}
 
 
-
-
-
           {/* <Route path='/dialogs' render={ () => <Dialogs dialogs={props.state.messagesPage.dialogs} messages={props.state.dialogsPage.messages}/>} /> */}
-          <Route path='/dialogs' render={ () => <Dialogs state={props.state.dialogsPage}/>} />
 
+          <Route path='/dialogs' render={ () => <Dialogs statE={props.state.messagesPage}/>} />
 
-
-
+          
 
           <Route path='/news' render={ () => <News />} />
           <Route path='/music' render={ () => <Music />} />
