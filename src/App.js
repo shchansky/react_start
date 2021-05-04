@@ -28,19 +28,7 @@ const App = (props) => {
         <Header />
         <Navbar />
         <div className="app-wrapper-content">
-          {/* <Route path='/profile' component={Profile} />
-          <Route path='/dialogs' component={Dialogs} />
-          <Route path='/news' component={News} />
-          <Route path='/music' component={Music} />
-          <Route path='/settings' component={Settings} />    альтернатива записи кода вмнсто render*/}
 
-          {/* <Route path='/profile' render={ () => <Profile posts={props.posts} />} />
-          <Route path='/dialogs' render={ () => <Dialogs dialogs={props.dialogs} messages={props.messages}/>} /> */}
-
-
-
-
-          {/* <Route path='/profile' render={ () => <Profile posts={props.state.profilePage.posts} />} /> */}
 
           <Route path='/profile'
             render={() => <Profile
@@ -50,20 +38,11 @@ const App = (props) => {
               />} />
 
 
-          {/* <Route path='/profile' render={ () => <Profile state={props["state"]["profilePage"]} />} />   ---альтернативное обращение к занчениям(данным) ассоциативного  масива (props) через ключи (свойсва) state и profilePage*/}
-
-
-          {/* <Route path='/dialogs' render={ () => <Dialogs dialogs={props.state.messagesPage.dialogs} messages={props.state.dialogsPage.messages}/>} /> */}
-
           <Route path='/dialogs' render={() => <Dialogs statE={props.state.messagesPage} />} />
-
-
 
           <Route path='/news' render={() => <News />} />
           <Route path='/music' render={() => <Music />} />
           <Route path='/settings' render={() => <Settings />} />
-
-
 
 
         </div>
