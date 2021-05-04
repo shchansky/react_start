@@ -42,25 +42,27 @@ const App = (props) => {
 
           {/* <Route path='/profile' render={ () => <Profile posts={props.state.profilePage.posts} />} /> */}
 
-          <Route path='/profile' 
-          render={ () => <Profile 
-          state={props.state.profilePage} 
-          addPost={props.addPost}/>} />
+          <Route path='/profile'
+            render={() => <Profile
+              profilePage={props.state.profilePage}
+              addPost={props.addPost} 
+              updateNewPostText={props.updateNewPostText}
+              />} />
 
-          
+
           {/* <Route path='/profile' render={ () => <Profile state={props["state"]["profilePage"]} />} />   ---альтернативное обращение к занчениям(данным) ассоциативного  масива (props) через ключи (свойсва) state и profilePage*/}
 
 
           {/* <Route path='/dialogs' render={ () => <Dialogs dialogs={props.state.messagesPage.dialogs} messages={props.state.dialogsPage.messages}/>} /> */}
 
-          <Route path='/dialogs' render={ () => <Dialogs statE={props.state.messagesPage}/>} />
+          <Route path='/dialogs' render={() => <Dialogs statE={props.state.messagesPage} />} />
 
-          
 
-          <Route path='/news' render={ () => <News />} />
-          <Route path='/music' render={ () => <Music />} />
-          <Route path='/settings' render={ () => <Settings />} />
-          
+
+          <Route path='/news' render={() => <News />} />
+          <Route path='/music' render={() => <Music />} />
+          <Route path='/settings' render={() => <Settings />} />
+
 
 
 
