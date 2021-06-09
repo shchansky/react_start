@@ -7,14 +7,7 @@ const SET_USERS = 'SET_USERS';
 let initialState = {
 
 
-    users: [
-
-        { id:1, photoUrl: 'https://sun9-31.userapi.com/c630423/v630423886/26b0/nGLPHwC5OAk.jpg?ava=1', followed: false, fullName: 'Misha', status: 'I am a boss', location: { city: 'Vladimir', country: 'Russia' } },
-        { id:2, photoUrl: 'https://sun9-31.userapi.com/c630423/v630423886/26b0/nGLPHwC5OAk.jpg?ava=1', followed: true, fullName: 'Vasya', status: 'I am a boss too', location: { city: 'Moscow', country: 'Russia' } },
-        { id:3, photoUrl: 'https://sun9-31.userapi.com/c630423/v630423886/26b0/nGLPHwC5OAk.jpg?ava=1', followed: false, fullName: 'Vova', status: 'I am a boss too', location: { city: 'Kiev', country: 'Ukrane' } },
-
-
-    ],
+    users: [   ],
 
 
 
@@ -34,7 +27,7 @@ const usersReducer = (state = initialState, action) => {
             // users: [...state.users]
             // users: state.users.map (u => u)
             users: state.users.map ( u => {
-                if (u.id === action.userID) {
+                if (u.id === action.userId) {
                     return {...u, followed: true}
                 }
                 return u;
@@ -44,7 +37,7 @@ const usersReducer = (state = initialState, action) => {
         return {
             ...state, 
             users: state.users.map ( u => {
-                if (u.id === action.userID) {
+                if (u.id === action.userId) {
                     return {...u, followed: false}
                 }
                 return u;
