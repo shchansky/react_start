@@ -10,28 +10,25 @@ import userPhoto from '../../assets/images/user.png'
 
 let Users = (props) => {
 
-    if (props.users.length === 0) {
 
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-            
+    let getUsers = () => {
 
-            props.setUsers(response.data.items)
+        if (props.users.length === 0) {
 
-        });
-
-
-        // props.setUsers(
-        //     [
-        //         { id: 1, photoUrl: 'https://sun9-31.userapi.com/c`630423/v630423886/26b0/nGLPHwC5OAk.jpg?ava=1', followed: false, fullName: 'Misha', status: 'I am a boss', location: { city: 'Vladimir', country: 'Russia' } },
-        //         { id: 2, photoUrl: 'https://sun9-31.userapi.com/c630423/v630423886/26b0/nGLPHwC5OAk.jpg?ava=1', followed: true, fullName: 'Vasya', status: 'I am a boss too', location: { city: 'Moscow', country: 'Russia' } },
-        //         { id: 3, photoUrl: 'https://sun9-31.userapi.com/c630423/v630423886/26b0/nGLPHwC5OAk.jpg?ava=1', followed: false, fullName: 'Vova', status: 'I am a boss too', location: { city: 'Kiev', country: 'Ukrane' } },
-        //     ]
-        // )
+            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                
+                props.setUsers(response.data.items)
+            });
+        }
     }
+
+
+
 
  
 
     return <div>
+        <button className={styles.userBtn} onClick={getUsers}>Get Users</button>
         {
             props.users.map(u => <div key={u.id}>
                 <span>
