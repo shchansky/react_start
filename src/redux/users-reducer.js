@@ -12,7 +12,7 @@ let initialState = {
     users: [],
     pageSize: 10,
     totalUsersCount: 0,
-    currentPage: 4,
+    currentPage: 3,
 
 
 
