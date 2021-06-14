@@ -1,9 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { followAC, setUsersAC, unfollowAC, setCurrentPageAC, setTotalUsersCountAC } from '../../redux/users-reducer';
-import UsersAPIComponent from './UsersAPIComponent';
 
 
+import * as axios from 'axios';
+import Users from './Users';
+
+
+//контейнерная компонета 1-го уровня(иначе API-уровня, она является классовой) , которая делает ajacs запросы на сервер в методе componentDidMount() и непосредственно оборачивает призентационную компонету Users (через render() и return). Также через нее транзитом проходят пропсы от контейнерной компоненты 1-го уровня (connect)
+class UsersAPIComponent extends React.Component {
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+                this.props.setTotalUsersCount(response.data.totalCount);
+            });
+    }
+    onPageChanged = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items);
+
+            });
+    }
+    render() {
+        return <Users totalUsersCount={this.props.totalUsersCount}
+            pageSize={this.props.pageSize}
+            currentPage={this.props.currentPage}
+            onPageChanged={this.onPageChanged}
+            users={this.props.users}
+            unfollow={this.props.unfollow}
+            follow={this.props.follow} />
+    }
+}
+
+
+
+
+
+
+////контейнерная компонета 2-го уровня , которая через connect связывается со stor(обмен данными выполняется через параметры mapStateToProps и mapDispatchToProps)
+//и оборачивает компоненту 1-го уровня UsersAPIComponent
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
