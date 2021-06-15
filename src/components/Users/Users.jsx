@@ -3,19 +3,16 @@ import userPhoto from '../../assets/images/user.png'
 import styles from './users.module.css';
 
 
-
-
-
 let Users = (props) => {
 
 
 
-        let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
-        let pages = []
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-        }
+    let pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+    }
 
 
 
@@ -23,12 +20,14 @@ let Users = (props) => {
 
     return <div>
 
+              
         <div className={styles.pageNumbers}>
             {pages.map(pageNum => {
                 return <span className={props.currentPage === pageNum && styles.selectedPage}
                     onClick={(e) => { props.onPageChanged(pageNum); }} >{pageNum}</span>
             })}
         </div>
+
 
         {
             props.users.map(u => <div key={u.id}>
