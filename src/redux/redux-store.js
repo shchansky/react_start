@@ -7,6 +7,7 @@ import messagesReducer from "./messages-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import usersReducer from "./users-reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
+import authReducer from "./auth-reducer";
 
 
 
@@ -14,7 +15,8 @@ let reducers = combineReducers ({
     profilePage: profileReducer,
     messagesPage: messagesReducer,
     sidebar: sidebarReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer
 });
 
 let store = createStore (reducers, composeWithDevTools());

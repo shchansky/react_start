@@ -5,7 +5,7 @@
     grid-area: header;
     background-color: grey;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     color: indigo;
     
@@ -16,4 +16,14 @@
     width: 100px;
     height: 100px;  
     
+  }
+
+  .loginBlog {
+    margin-right: 15px;
+    
+  }
+
+  .loginBlog a {
+    text-decoration: none ;
+    color: blanchedalmond;
   }
