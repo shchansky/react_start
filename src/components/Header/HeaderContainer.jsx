@@ -15,7 +15,7 @@ class HeaderContainer extends React.Component {
         })
             .then(response => {
 
-                debugger;
+                
 
                 let { id,email,login } = response.data.data
                 if (response.data.resultCode === 0) {
