@@ -1,12 +1,45 @@
 import * as axios from 'axios';
 
 
-export const getUsers = (currentPage = 1, pageSize = 10) => {
+// const baseUrl = 'https://social-network.samuraijs.com/api/1.0/'
+
+const instance = axios.create({
+    withCredentials: true,
+    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+    headers: {
+        "API-KEY": "6bf479bf-fcae-4561-a59e-07ba9dc0a182"
+    }
+});
 
 
+export const usersAPI = {
 
-return axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`,
-    {
-        withCredentials: true
-    })
+    getUsers (currentPage = 1, pageSize = 10) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+            .then(response => {
+                return response.data;
+            })
+    }
+
+
+}
+
+
+// export const getUsers = (currentPage = 1, pageSize = 10) => {
+//     // return axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`
+//     // return instance.get(baseUrl + `users?page=${currentPage}&count=${pageSize}`)
+//     return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+//         .then(response => {
+//             return response.data;
+//         })
+// }
+
+
+export const getUsers2 = (currentPage = 1, pageSize = 10) => {
+    // return axios.get(`https://social-network.samuraijs.com/api/1.0/follow?page=${currentPage}&count=${pageSize}`
+    // return instance.get(baseUrl + `follow ? page = ${currentPage} & count=${pageSize}`)
+    return instance.get(`follow ? page = ${currentPage} & count=${pageSize}`)
+        .then(response => {
+            return response.data;
+        })
 }

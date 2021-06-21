@@ -8,7 +8,8 @@ import Users from './Users';
 
 
 import Preloader from '../common/Preloader/Preloader.jsx';
- import { getUsers } from '../../api/api';
+// import { getUsers } from '../../api/api';
+import { usersAPI } from '../../api/api';
 
 
 
@@ -20,36 +21,65 @@ class UsersContainer extends React.Component {
         this.props.toggleIsFetching(true);
 
 
-        getUsers (this.props.currentPage, this.props.pageSize)
-        //код котрый закоментирован ниже выполняет getUsers () в файле api.js
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+        //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
         // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
         // {
         //     withCredentials: true
         // })
-            .then(response => {
-               
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
+
+        // .then(response => {
+        //     debugger;
+        //     this.props.setUsers(response.data.items);
+        //     this.props.setTotalUsersCount(response.data.totalCount);
+        //     this.props.toggleIsFetching(false);
+        // });
+
+        //data из response возвращает getUsers и мы ее наапрямую используем
+            .then(data => {
+                this.props.setUsers(data.items);
+                this.props.setTotalUsersCount(data.totalCount);
                 this.props.toggleIsFetching(false);
             });
+
+
+
+
     }
+
+
+
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-        {
-            withCredentials: true
-        })
-            .then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.toggleIsFetching(false);
-            });
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+        //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
+        // {
+        //     withCredentials: true
+        // })
+
+
+        //     .then(response => {
+        //     this.props.setUsers(response.data.items);
+        //     this.props.toggleIsFetching(false);
+        // });
+
+
+        //data из response возвращает getUsers и мы ее наапрямую используем
+        .then(data => {
+            this.props.setUsers(data.items);
+            this.props.toggleIsFetching(false);
+        });
+
+
+
     }
     render() {
         return <>
 
-            {this.props.isFetching ? <Preloader />  : null} 
-                        
+            {this.props.isFetching ? <Preloader /> : null}
+
             <Users totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
@@ -64,7 +94,7 @@ class UsersContainer extends React.Component {
 }
 
 
- 
+
 
 
 
@@ -112,5 +142,5 @@ let mapStateToProps = (state) => {
 
 //оптимизируем код - вместо mapDispatchToProps в connect напрямик передаем объект из ссылок на action creator. 
 //Action creatop переименовал в follow, unfollow, setUsers,setCurrentPage,  setTotalUsersCount, toggleIsFetching исключив в конце буквы АС
-export default connect(mapStateToProps, 
-    {follow,unfollow,setUsers,setCurrentPage,setTotalUsersCount,toggleIsFetching})(UsersContainer);
+export default connect(mapStateToProps,
+    { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching })(UsersContainer);
