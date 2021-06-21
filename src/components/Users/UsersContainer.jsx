@@ -8,7 +8,7 @@ import Users from './Users';
 
 
 import Preloader from '../common/Preloader/Preloader.jsx';
-
+ import { getUsers } from '../../api/api';
 
 
 
@@ -18,10 +18,14 @@ import Preloader from '../common/Preloader/Preloader.jsx';
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-        {
-            withCredentials: true
-        })
+
+
+        getUsers (this.props.currentPage, this.props.pageSize)
+        //код котрый закоментирован ниже выполняет getUsers () в файле api.js
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+        // {
+        //     withCredentials: true
+        // })
             .then(response => {
                
                 this.props.setUsers(response.data.items);
