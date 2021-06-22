@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching } from '../../redux/users-reducer';
+import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress } from '../../redux/users-reducer';
 
 
 import * as axios from 'axios';
@@ -22,20 +22,20 @@ class UsersContainer extends React.Component {
 
 
         usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-        //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-        // {
-        //     withCredentials: true
-        // })
+            //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
+            // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+            // {
+            //     withCredentials: true
+            // })
 
-        // .then(response => {
-        //     debugger;
-        //     this.props.setUsers(response.data.items);
-        //     this.props.setTotalUsersCount(response.data.totalCount);
-        //     this.props.toggleIsFetching(false);
-        // });
+            // .then(response => {
+            //     debugger;
+            //     this.props.setUsers(response.data.items);
+            //     this.props.setTotalUsersCount(response.data.totalCount);
+            //     this.props.toggleIsFetching(false);
+            // });
 
-        //data из response возвращает getUsers и мы ее наапрямую используем
+            //data из response возвращает getUsers и мы ее наапрямую используем
             .then(data => {
                 this.props.setUsers(data.items);
                 this.props.setTotalUsersCount(data.totalCount);
@@ -53,24 +53,24 @@ class UsersContainer extends React.Component {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFetching(true);
         usersAPI.getUsers(pageNumber, this.props.pageSize)
-        //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-        // {
-        //     withCredentials: true
-        // })
+            //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
+            // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
+            // {
+            //     withCredentials: true
+            // })
 
 
-        //     .then(response => {
-        //     this.props.setUsers(response.data.items);
-        //     this.props.toggleIsFetching(false);
-        // });
+            //     .then(response => {
+            //     this.props.setUsers(response.data.items);
+            //     this.props.toggleIsFetching(false);
+            // });
 
 
-        //data из response возвращает getUsers и мы ее наапрямую используем
-        .then(data => {
-            this.props.setUsers(data.items);
-            this.props.toggleIsFetching(false);
-        });
+            //data из response возвращает getUsers и мы ее наапрямую используем
+            .then(data => {
+                this.props.setUsers(data.items);
+                this.props.toggleIsFetching(false);
+            });
 
 
 
@@ -86,7 +86,11 @@ class UsersContainer extends React.Component {
                 onPageChanged={this.onPageChanged}
                 users={this.props.users}
                 unfollow={this.props.unfollow}
-                follow={this.props.follow} />
+                follow={this.props.follow}
+                toggleFollowingProgress={this.props.toggleFollowingProgress}
+                followingInProgress={this.props.followingInProgress}
+            />
+
 
 
         </>
@@ -107,6 +111,7 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -143,4 +148,4 @@ let mapStateToProps = (state) => {
 //оптимизируем код - вместо mapDispatchToProps в connect напрямик передаем объект из ссылок на action creator. 
 //Action creatop переименовал в follow, unfollow, setUsers,setCurrentPage,  setTotalUsersCount, toggleIsFetching исключив в конце буквы АС
 export default connect(mapStateToProps,
-    { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching })(UsersContainer);
+    { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress })(UsersContainer);
