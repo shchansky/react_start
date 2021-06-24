@@ -7,8 +7,6 @@ import * as axios from 'axios';
 
 let Users = (props) => {
 
-
-
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
     let pages = []
@@ -16,32 +14,24 @@ let Users = (props) => {
         pages.push(i);
     }
 
-
-
-
-
     return <div>
-
 
         <div className={styles.pageNumbers}>
             {pages.map(pageNum => {
                 return <span className={props.currentPage === pageNum && styles.selectedPage}
-                    onClick={(e) => { props.onPageChanged(pageNum); }} >{pageNum}</span>
+                    onClick={(e) => { props.onPageChanged(pageNum) }} >{pageNum}</span>
             })}
         </div>
-
 
         {
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-
                         <NavLink to={'/profile/' + u.id} >
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} className={styles.userPhoto} />
                         </NavLink>
-
-
                     </div>
+ 
                     <div>
                         {u.followed
                             ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
@@ -70,6 +60,7 @@ let Users = (props) => {
                                     }
                                 })
                                     .then(response => {
+                                        // debugger;
                                         if (response.data.resultCode == 0) {
                                             props.follow(u.id)
                                         }

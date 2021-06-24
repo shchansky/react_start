@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress } from '../../redux/users-reducer';
+import { follow, setUsers, unfollow, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress, getUsersThunkCreator } from '../../redux/users-reducer';
 
 
 import * as axios from 'axios';
@@ -8,7 +8,7 @@ import Users from './Users';
 
 
 import Preloader from '../common/Preloader/Preloader.jsx';
-// import { getUsers } from '../../api/api';
+
 import { usersAPI } from '../../api/api';
 
 
@@ -18,31 +18,15 @@ import { usersAPI } from '../../api/api';
 //контейнерная компонета 1-го уровня(иначе API-уровня, она является классовой) , которая делает ajaх запросы на сервер в методе componentDidMount() и непосредственно оборачивает призентационную компонету Users (через render() и return). Также через нее транзитом проходят пропсы от контейнерной компоненты 1-го уровня (connect)
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
 
+        // this.props.toggleIsFetching(true);
+        // usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+        //     this.props.setUsers(data.items);
+        //     this.props.setTotalUsersCount(data.totalCount);
+        //     this.props.toggleIsFetching(false);
+        // });
 
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
-            // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-            // {
-            //     withCredentials: true
-            // })
-
-            // .then(response => {
-            //     debugger;
-            //     this.props.setUsers(response.data.items);
-            //     this.props.setTotalUsersCount(response.data.totalCount);
-            //     this.props.toggleIsFetching(false);
-            // });
-
-            //data из response возвращает getUsers и мы ее наапрямую используем
-            .then(data => {
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount);
-                this.props.toggleIsFetching(false);
-            });
-
-
+        this.props.getUsersThunkCreator()
 
 
     }
@@ -53,20 +37,6 @@ class UsersContainer extends React.Component {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFetching(true);
         usersAPI.getUsers(pageNumber, this.props.pageSize)
-            //код с запросоь axios.get котрый закоментирован ниже выполняет getUsers () в файле api.js
-            // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-            // {
-            //     withCredentials: true
-            // })
-
-
-            //     .then(response => {
-            //     this.props.setUsers(response.data.items);
-            //     this.props.toggleIsFetching(false);
-            // });
-
-
-            //data из response возвращает getUsers и мы ее наапрямую используем
             .then(data => {
                 this.props.setUsers(data.items);
                 this.props.toggleIsFetching(false);
@@ -100,10 +70,6 @@ class UsersContainer extends React.Component {
 
 
 
-
-
-////контейнерная компонета 2-го уровня , которая через connect связывается со stor(обмен данными выполняется через параметры mapStateToProps и mapDispatchToProps)
-//и оборачивает компоненту 1-го уровня UsersAPIComponent
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
@@ -116,36 +82,11 @@ let mapStateToProps = (state) => {
 }
 
 
-//В целях оптимизации кода исключил let mapDispatchToProps. То что возвращала функция вставил напрямик в connect в виде объекта.
-// let mapDispatchToProps = (dispatch) => {
-//     return {
-//         follow: (userId) => {
-//             dispatch(followAC(userId));
-//         },
-//         unfollow: (userId) => {
-//             dispatch(unfollowAC(userId));
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsersAC(users));
-//         },
-//         setCurrentPage: (pageNumber) => {
-//             dispatch(setCurrentPageAC(pageNumber));
-//         },
-//         setTotalUsersCount: (totalCount) => {
-//             dispatch(setTotalUsersCountAC(totalCount));
-//         },
-//         toggleIsFetching: (isFetching) => {
-//             dispatch(toggleIsFetchingAC(isFetching));
-//         },
 
-//     }
-// }
-
-
-
-
-
-//оптимизируем код - вместо mapDispatchToProps в connect напрямик передаем объект из ссылок на action creator. 
-//Action creatop переименовал в follow, unfollow, setUsers,setCurrentPage,  setTotalUsersCount, toggleIsFetching исключив в конце буквы АС
 export default connect(mapStateToProps,
-    { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress })(UsersContainer);
+    {
+        follow, unfollow, setUsers,
+        setCurrentPage, setTotalUsersCount,
+        toggleIsFetching, toggleFollowingProgress,
+        getUsersThunkCreator
+    })(UsersContainer);
