@@ -9,19 +9,20 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 
 
-const Profile = (props) => {
 
-  return (
+  const Profile = (props) => {
 
-    <div className={classes.content}>
-      <ProfileInfo profile={props.profile}/>
-      <MyPostsContainer />
+    return (
+
+      <div className={classes.content}>
+        <ProfileInfo profile={props.profile} />
+        <MyPostsContainer />
 
 
-    </div>
-  )
+      </div>
+    )
 
-}
+  }
 
 
 export default Profile;

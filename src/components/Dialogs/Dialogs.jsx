@@ -24,17 +24,17 @@ const Dialogs = (props) => {
     props.sendMessage();
   }
 
-  
+
 
   let onSendMessageChange = (event) => {
-    let body = event.target.value    
+    let body = event.target.value
     props.updateNewMessageBody(body);
   }
 
 
 
 
- if (props.isAuth==false) return <Redirect to ={'/login'} />
+  if (props.isAuth === false) return <Redirect to={'/login'} />
 
 
 
@@ -53,9 +53,9 @@ const Dialogs = (props) => {
       <div>
         <div>
           <textarea value={newMessageBody} onChange={onSendMessageChange} placeholder="Enter your message" />
-          </div>
+        </div>
         <div>
-          <button onClick = { onSendMessageClick }>Send</button>
+          <button onClick={onSendMessageClick}>Send</button>
         </div>
       </div>
 
