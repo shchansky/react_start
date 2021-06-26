@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, unfollow, setCurrentPage,toggleFollowingProgress, getUsers } from '../../redux/users-reducer';
+import { follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsers } from '../../redux/users-reducer';
 
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader.jsx';
 
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 
 
@@ -76,7 +77,7 @@ let mapStateToProps = (state) => {
 }
 
 
-
+//первый вариант записи кода
 // let withRedirect = withAuthRedirect (UsersContainer)
 // export default connect(mapStateToProps,
 //     {
@@ -89,15 +90,28 @@ let mapStateToProps = (state) => {
 
 
 
+//второй вариант записи кода
+// export default withAuthRedirect(connect(mapStateToProps,
+//     {
+//         follow, unfollow,
+//         setCurrentPage,
+//         toggleFollowingProgress,
+//         getUsers
+//     })
+//     (UsersContainer));
 
-//альтернатива записи
-// let withRedirect = withAuthRedirect (UsersContainer)
-export default withAuthRedirect (connect(mapStateToProps,
-    {
-        follow, unfollow,
-        setCurrentPage,
-        toggleFollowingProgress,
-        getUsers
 
-    })
-    (UsersContainer));
+
+
+//третий вариант
+export default compose(
+    connect(mapStateToProps,
+        {
+            follow, unfollow,
+            setCurrentPage,
+            toggleFollowingProgress,
+            getUsers
+        }),
+    withAuthRedirect
+)
+    (UsersContainer)
