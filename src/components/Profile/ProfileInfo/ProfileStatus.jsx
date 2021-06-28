@@ -4,8 +4,8 @@ import classes from './ProfileInfo.module.css';
 class ProfileStatus extends React.Component {
 
     state = {
-        editMode: false,
-        title: "YO"
+        editMode: false,  
+        status: this.props.status     
     }
 
     // activeEditMode = () => {
@@ -24,8 +24,26 @@ class ProfileStatus extends React.Component {
     deactiveEditMode () {
         this.setState ({
             editMode : false
-        })
+        });
+        this.props.updateStatus(this.state.status);
     }
+
+
+    onStatusChange = (e) => {
+
+        this.setState ({
+            status: e.currentTarget.value
+        })
+
+    }
+
+
+componentDidUpdate () {
+    debugger;
+    console.log("componentDidUpdate")
+
+}
+
 
 
     render() {
@@ -33,12 +51,12 @@ class ProfileStatus extends React.Component {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activeEditMode.bind(this)}>{this.props.status}</span>
+                        <span onDoubleClick={this.activeEditMode.bind(this)}>{this.props.status || "---------"}</span>
                     </div>
                 }
                 {this.state.editMode &&
                     <div>
-                        <input autoFocus={true} onBlur={this.deactiveEditMode.bind(this)} value={this.props.status} />
+                        <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactiveEditMode.bind(this)} value={this.state.status} />
                     </div>
                 }
             </div>
