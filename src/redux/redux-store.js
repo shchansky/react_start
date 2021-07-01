@@ -9,7 +9,7 @@ import usersReducer from "./users-reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import authReducer from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
-
+import { reducer as formReducer} from "redux-form"
 
 
 let reducers = combineReducers({
@@ -17,7 +17,8 @@ let reducers = combineReducers({
     messagesPage: messagesReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer,
 });
 
 //вылетает бага из-за composeWithDevTools()
