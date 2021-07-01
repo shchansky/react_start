@@ -25,7 +25,7 @@ class UsersContainer extends React.Component {
 
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
 
-
+        
     }
 
 
