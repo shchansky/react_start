@@ -90,19 +90,26 @@ export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_I
 
 
 
-export const getUsers = (currentPage, pageSize) => {
-
-    return (dispatch) => {
-        dispatch(toggleIsFetching(true));
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(data.totalCount));
-            dispatch(toggleIsFetching(false));
-        });
-    }
+export const getUsers = (currentPage, pageSize) => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    usersAPI.getUsers(currentPage, pageSize).then(data => {
+        dispatch(setUsers(data.items));
+        dispatch(setTotalUsersCount(data.totalCount));
+        dispatch(toggleIsFetching(false));
+    });
 }
 
 
+// export const getUsers = (currentPage, pageSize) => {
+//     return (dispatch) => {
+//         dispatch(toggleIsFetching(true));
+//         usersAPI.getUsers(currentPage, pageSize).then(data => {
+//             dispatch(setUsers(data.items));
+//             dispatch(setTotalUsersCount(data.totalCount));
+//             dispatch(toggleIsFetching(false));
+//         });
+//     }
+// }
 
 
 export const follow = (userId) => {
