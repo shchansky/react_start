@@ -6,6 +6,8 @@ import { Input } from '../common/FormsControl/FormsControl';
 import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer'
 import { Redirect } from 'react-router-dom';
+import style from "../common/FormsControl/FormsControl.module.css"
+
 
 const LoginForm = (props) => {
     return (
@@ -14,13 +16,24 @@ const LoginForm = (props) => {
                 <Field placeholder={"Email"} name={"email"} component={Input} validate={[required]} />
             </div>
             <div>
-                <Field placeholder={"Password"} name={"password"} component={Input} validate={[required]} type={"password"}/>
+                <Field placeholder={"Password"} name={"password"} component={Input} validate={[required]} type={"password"} />
             </div>
             <div>
                 <label>
                     <Field type={"checkbox"} name={"rememberMe"} component={Input} /> remember me
                 </label>
             </div>
+
+
+            {props.error && <div className={style.formSummaryError}>{props.error }</div>}
+
+
+
+
+
+
+
+
             <button>Login</button>
         </form>
     )
@@ -39,13 +52,13 @@ const Login = (props) => {
     }
 
     if (props.isAuth) {
-        return <Redirect to = {"/profile"}/>
+        return <Redirect to={"/profile"} />
     }
     return <div>
-            <h1>LOGIN</h1>
-            <LoginReduxForm onSubmit={onSubmit} />
-        </div>
-    
+        <h1>LOGIN</h1>
+        <LoginReduxForm onSubmit={onSubmit} />
+    </div>
+
 }
 
 
