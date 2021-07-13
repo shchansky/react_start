@@ -28,7 +28,7 @@ let reducers = combineReducers({
 //вылетает бага из-за composeWithDevTools()
 // let store = createStore(reducers, applyMiddleware(thunkMiddleware), composeWithDevTools());
 
+
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 window.store = store;
-
 export default store;

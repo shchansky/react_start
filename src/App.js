@@ -17,7 +17,6 @@ import Settings from './components/Settings/Settings';
 
 import { Route, withRouter } from 'react-router-dom';
 
-import { getAuthUserData } from './redux/auth-reducer';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -28,20 +27,15 @@ import Preloader from './components/common/Preloader/Preloader';
 
 class App extends React.Component {
 
-
   componentDidMount() {
     this.props.initializeAPP();
   }
 
-
-
   render() {
-
     if (!this.props.initialized) {
       return <Preloader />
     } else {
       return (
-
         <div className='app-wrapper' >
           <HeaderContainer />
           <Navbar />
