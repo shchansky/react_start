@@ -13,6 +13,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer} from "redux-form"
+import { compose } from 'redux';
 
 
 let reducers = combineReducers({
@@ -25,10 +26,23 @@ let reducers = combineReducers({
     app: appReducer
 });
 
-//вылетает бага из-за composeWithDevTools()
+
+
+//исх. код
+// let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+
+//вылетает бага из-за composeWithDevTools()- при уст. Redux Dev Tools
 // let store = createStore(reducers, applyMiddleware(thunkMiddleware), composeWithDevTools());
 
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
-window.store = store;
+//исправил ошибку, Redux Dev Tools работает
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(thunkMiddleware)
+  ));
+
+
+window.__store__ = store;
+
+
 export default store;
