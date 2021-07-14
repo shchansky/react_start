@@ -7,30 +7,22 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import LoginPage from './components/Login/Login';
-
-
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-
-
-
 import { Route, withRouter } from 'react-router-dom';
-
-
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
 import { initializeAPP, initialized } from './redux/app-reducer';
-
 import Preloader from './components/common/Preloader/Preloader';
+import store from './redux/redux-store';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 class App extends React.Component {
-
   componentDidMount() {
     this.props.initializeAPP();
   }
-
   render() {
     if (!this.props.initialized) {
       return <Preloader />
@@ -47,19 +39,13 @@ class App extends React.Component {
             <Route path='/news' render={() => <News />} />
             <Route path='/music' render={() => <Music />} />
             <Route path='/settings' render={() => <Settings />} />
-
-
           </div>
         </div>
-
       )
     }
   }
-
-
-
-
 }
+
 
 let mapStateToProps = (state) => {
   return {
@@ -67,8 +53,16 @@ let mapStateToProps = (state) => {
   }
 }
 
-
-
-export default compose(
+let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeAPP }))(App)
+
+const JSApp = (props) => {
+  return <BrowserRouter>
+    <Provider store={store} >
+      <AppContainer />
+    </Provider>
+  </BrowserRouter>
+}
+
+export default JSApp
