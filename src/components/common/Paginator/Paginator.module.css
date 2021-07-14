@@ -1,8 +1,31 @@
-.selectedPage {
+/* .selectedPage {
     font-weight: bold;
 }
 
 .pageNumbers span {
     margin-right: 5px;
     cursor: pointer;
+} */
+
+
+.paginator {
+    margin: 10px;
+}
+
+
+.paginator span,
+.paginator button
+ {
+    cursor: pointer
+}
+
+.pageNumber {
+    padding: 2px;
+    border: 1px solid gray;
+}
+
+.pageNumber.selectedPage {
+    font-weight: bold;
+    color: black;
+
 }
