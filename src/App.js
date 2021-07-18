@@ -47,6 +47,8 @@ class App extends React.Component {
             {/* <Route path='/dialogs' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <DialogsContainer /> </React.Suspense> } } /> */}
             <Route path='/dialogs' render={withSuspense (DialogsContainer)} />
 
+
+
             <Route path='/users' render={() => <UsersContainer />} />
             <Route path='/login' render={() => <LoginPage />} />
             <Route path='/news' render={() => <News />} />
@@ -70,21 +72,21 @@ let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeAPP }))(App)
 
-const JSApp = (props) => {
-  return <BrowserRouter>
-    <Provider store={store} >
-      <AppContainer />
-    </Provider>
-  </BrowserRouter>
-}
-
-
 // const JSApp = (props) => {
-//   return <HashRouter>
+//   return <BrowserRouter>
 //     <Provider store={store} >
 //       <AppContainer />
 //     </Provider>
-//   </HashRouter>
+//   </BrowserRouter>
 // }
+
+
+const JSApp = (props) => {
+  return <HashRouter>
+    <Provider store={store} >
+      <AppContainer />
+    </Provider>
+  </HashRouter>
+}
 
 export default JSApp

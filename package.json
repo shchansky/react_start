@@ -2,8 +2,7 @@
   "name": "react_start",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gitname.github.io/react-gh-pages",
-
+  "homepage": "https://shchansky.github.io/react_start",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
