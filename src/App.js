@@ -15,7 +15,7 @@ import { compose } from 'redux';
 import { initializeAPP, initialized } from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
 import store from './redux/redux-store';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { withSuspense } from './hoc/withSuspense';
 
@@ -45,7 +45,7 @@ class App extends React.Component {
 
             <Route path='/profile/:userId?' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <ProfileContainer /> </React.Suspense> } } />
             {/* <Route path='/dialogs' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <DialogsContainer /> </React.Suspense> } } /> */}
-            <Route path='/dialogs' render={withSuspense(DialogsContainer)} />
+            <Route path='/dialogs' render={withSuspense (DialogsContainer)} />
 
             <Route path='/users' render={() => <UsersContainer />} />
             <Route path='/login' render={() => <LoginPage />} />
@@ -77,5 +77,14 @@ const JSApp = (props) => {
     </Provider>
   </BrowserRouter>
 }
+
+
+// const JSApp = (props) => {
+//   return <HashRouter>
+//     <Provider store={store} >
+//       <AppContainer />
+//     </Provider>
+//   </HashRouter>
+// }
 
 export default JSApp
