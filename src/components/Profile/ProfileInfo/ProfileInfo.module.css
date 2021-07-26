@@ -8,3 +8,31 @@
     max-width: 200px;
     object-fit: cover;
 }
+
+
+.userPhotoLabel {
+    display: block;
+    margin: 15px 0px;  
+}
+
+.userPhotoFormInput {
+display: none;
+
+}
+
+.userPhotoFormInput:hover + .userPhotoFormBtn {
+    box-shadow: 5px 5px 5px grey;
+}
+
+
+.userPhotoFormBtn {
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.contact {
+    padding-left: 10px;
+}

@@ -44,6 +44,8 @@ class App extends React.Component {
           <div className='app-wrapper-content'>
 
             <Route path='/profile/:userId?' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <ProfileContainer /> </React.Suspense> } } />
+
+            
             {/* <Route path='/dialogs' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <DialogsContainer /> </React.Suspense> } } /> */}
             <Route path='/dialogs' render={withSuspense (DialogsContainer)} />
 

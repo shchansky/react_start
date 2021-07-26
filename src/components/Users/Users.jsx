@@ -11,15 +11,13 @@ let Users = ({ currentPage, totalUsersCount, pageSize, onPageChanged, ...props }
             totalItemsCount={totalUsersCount}
             pageSize={pageSize} />
 
-        {
-            props.users.map(u => <User user={u}
-                followingInProgress={props.followingInProgress}
-                unfollow={props.unfollow}
-                follow={props.follow}
-                key={u.id} />
-            )
+        {props.users.map(u => <User user={u}
+            followingInProgress={props.followingInProgress}
+            unfollow={props.unfollow}
+            follow={props.follow}
+            key={u.id} />)
         }
     </div >
 }
 
-export default Users; 
+export default Users;
