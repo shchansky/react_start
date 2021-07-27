@@ -1,4 +1,5 @@
 import { usersAPI, profileAPI } from '../api/api'
+import { stopSubmit } from 'redux-form'
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -122,9 +123,28 @@ export const savePhoto = (file) => async (dispatch) => {
 
 
 
+export const saveProfile = (profile) => async (dispatch, getState) => {
+    const userId = getState().auth.userId
+    let response = await profileAPI.saveProfile(profile);
+
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId));
+    } else {
+        dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }));
+        //_error -это общее сообщение об ошибке в библиотеке (приходит в response от сетвера см. Network/Responce) в форму; edit-profile это название формы ProfileDataReduxForm котрая оборачивает целевую к-ту ProfileDataForm в файле ProfileDataForm.js 
+        //"edit-profile" - это название у формы, в нее прилетит пропс error
 
 
 
+        //альтернативный хардкодовый вариант-cообщение выводим в поле facebook при наличии в нем ошибки. Домашка -надо распарсить строку (contacts и facebook- то что содержится в атрибуте name у input-см.инспектор элементов )
+        // dispatch(stopSubmit("edit-profile", { "contacts": {"facebook": response.data.messages[0] }   }))
+
+
+
+        return Promise.reject (response.data.messages[0])
+        //изменения в форме не сохраняются в случае ошибки
+    }
+}
 
 
 

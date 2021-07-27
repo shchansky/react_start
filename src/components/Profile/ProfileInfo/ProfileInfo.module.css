@@ -36,3 +36,23 @@ display: none;
 .contact {
     padding-left: 10px;
 }
+
+
+
+.formControl.error input,
+.formControl.error textarea {
+border: 2px solid red;
+}
+
+
+.formControl.error span {
+color: red;
+}
+
+.formSummaryError {
+
+border: 1px solid red;
+padding:5px;
+color:red;
+
+}
