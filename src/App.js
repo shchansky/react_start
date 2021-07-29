@@ -33,6 +33,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.initializeAPP();
   }
+
   render() {
     if (!this.props.initialized) {
       return <Preloader />
@@ -73,6 +74,11 @@ let mapStateToProps = (state) => {
 let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeAPP }))(App)
+//обертка из withRouter является фишкой кода, если не сделать Preloader будет крутиться даже когда данные придут с сервера
+
+
+
+
 
 // const JSApp = (props) => {
 //   return <BrowserRouter>
@@ -81,8 +87,6 @@ let AppContainer = compose(
 //     </Provider>
 //   </BrowserRouter>
 // }
-
-
 const JSApp = (props) => {
   return <HashRouter>
     <Provider store={store} >

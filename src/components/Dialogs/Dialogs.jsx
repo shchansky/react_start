@@ -22,6 +22,13 @@ const Dialogs = (props) => {
 
   let addNewMessage = (values) => {
     props.sendMessage(values.newMessageBody)
+    //values.newMessageBody это данные из AddMessageForm которые предаются через handleSubmit, 
+    //кторый дергает  addNewMessage через onSubmit родительской компоненты <AddMessageFormRedux 
+    //onSubmit={addNewMessage} />      .newMessageBody это поле в JSON объекте values которое 
+    //соотвествует name={"newMessageBody"} у Field компоненты
+
+
+    //sendMessage  прилетает в пропсах из родительской к-ты (сидит в mdtp) и диспатчит дынные из формы (в values.newMessageBody) в store
   }
 
 

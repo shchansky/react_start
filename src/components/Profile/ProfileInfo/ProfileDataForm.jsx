@@ -6,10 +6,14 @@ import classes from './ProfileInfo.module.css';
 
 const ProfileDataForm = ({ handleSubmit, error, ...props }) => {
     //error в пропсах прокидывается напрямик в форму ProfileDataReduxForm (оборачивает целевую к-ту ProfileDataForm), минуя контейнерную компоненту, (см.санку saveProfile с методом stopSubmit в profileReducer) 
+    //handleSubmit - это callback из библиотеки redux-form который прилетает в props для целевой компоненты, которая обернута контейнерной reduxForm
+    //
+    //у любой формы есть есть событие onSubmit которое указывается в виде атрибута; onSubmit={props.handleSubmit} - указывается в виде атрибута при вызове формы
     return (
-        <form >
+        <form onSubmit={handleSubmit}>
             <div>
-                <button type="submit" onClick={handleSubmit}>save</button>
+                <button >save</button>
+                
             </div>
 
 
@@ -26,7 +30,7 @@ const ProfileDataForm = ({ handleSubmit, error, ...props }) => {
                 {CreateField("", "lookingForAJob", [], Input, { type: "checkbox" })}
             </div>
 
-
+   
             <div>
                 <b>My proffesional skills</b>:
                 {CreateField("My proffesional skills", "lookingForAJobDescription", [], Textarea)}
@@ -59,5 +63,7 @@ const ProfileDataForm = ({ handleSubmit, error, ...props }) => {
 
 
 const ProfileDataReduxForm = reduxForm({ form: 'edit-profile' })(ProfileDataForm)
+
+//"edit-profile" - это название у формы, для того чтобы в нее приходили props из store.form ; указывается при диспатче в reducer
 
 export default ProfileDataReduxForm

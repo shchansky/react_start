@@ -29,7 +29,7 @@ const ProfileInfo = ({ savePhoto, saveProfile, ...props }) => {
       const promise = saveProfile(formData)
       promise.then (() => {setEditMode(false) })          
     }
-
+//formData -это данные полученные в поле store.form; с помощью handleSubmit дфнные пакуются в один объект
     return (
         <div>
             <div className={classes.descriptionBlock}>
@@ -42,6 +42,7 @@ const ProfileInfo = ({ savePhoto, saveProfile, ...props }) => {
 
                 {editMode
                     ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
+                    //у любой формы есть есть событие onSubmit которое указывается в виде атрибута; onSubmit={props.handleSubmit}, где handleSubmit - это callback из библиотеки redux-form который прилетает в props для целевой компоненты, которая обернута контейнерной reduxForm
                     : <ProfileData goToEditMode={() => { setEditMode(true) }} profile={props.profile} isOwner={props.isOwner} />}
 
 

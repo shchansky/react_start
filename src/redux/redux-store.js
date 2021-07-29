@@ -43,6 +43,7 @@ const store = createStore(reducers, /* preloadedState, */ composeEnhancers(apply
 
 
 window.__store__ = store;
+//window.__store__.getState()
 
 
 export default store;

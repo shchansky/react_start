@@ -2,7 +2,6 @@ import * as axios from 'axios';
 
 
 // const baseUrl = 'https://social-network.samuraijs.com/api/1.0/'
-
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -10,7 +9,7 @@ const instance = axios.create({
         "API-KEY": "6bf479bf-fcae-4561-a59e-07ba9dc0a182"
     }
 });
-
+//благодаря withCredentials: true, наша кука цепляется к запросу с http://localhost:3000/ на другой домен и этот домен понимает что мы авторизованы
 
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
@@ -28,40 +27,27 @@ export const usersAPI = {
     getProfile(userId) {
         // return instance.get(`profile/` + userId)
 
-
-
         //или так
         console.warn('Obsolete method. Pleas used profileAPI object.')
         return profileAPI.getProfile(userId)
-
-
     },
 }
-
-
 
 
 export const profileAPI = {
     getProfile(userId) {
         return instance.get(`profile/` + userId)
     },
-
     getStatus(userId) {
         return instance.get(`profile/status/` + userId)
     },
-
     updateStatus(status) {
         return instance.put(`profile/status`, { status: status })
     },
 
-
-
     savePhoto(photoFile) {
-
         const formData = new FormData()
-        formData.append('image',photoFile)
-
-
+        formData.append('image', photoFile)
         return instance.put(`/profile/photo`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -69,36 +55,30 @@ export const profileAPI = {
         })
     },
 
-
-    saveProfile (profile) {
+    saveProfile(profile) {
         return instance.put(`profile`, profile)
     }
-
 }
-
-
-
-
-
-
 
 
 export const authAPI = {
-
     me() {
         return instance.get(`auth/me`)
     },
-
-    login(email, password, rememberMe = false) {
-        return instance.post(`auth/login`, { email, password, rememberMe })
+    login(email, password, rememberMe = false, captcha = null) {
+        return instance.post(`auth/login`, { email, password, rememberMe, captcha })
+        //входим в систему, сервер сохранил куку с email, password ,rememberMe
     },
-
     logout() {
         return instance.delete(`auth/login`)
+        //вылогиниваемся, сервер удаляет куку
     }
-
-
-
 }
 
+
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`)
+    },
+}
 

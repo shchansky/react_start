@@ -21,6 +21,7 @@ class ProfileContainer extends React.Component {
       userId = this.props.autorizedUserId;
       if (!userId) {
         this.props.history.push("/login")
+        //props.history сидят в одном объекте props.match.params. благодаря withRouter  "/login"  добавляется в URL браузера--и отображается к-та Login.jsx (history.push("/login") --- аналог  Redirect)
       }
     }
     this.props.getUserProfile(userId);
@@ -63,7 +64,7 @@ let mapStateToProps = (state) => ({
 export default compose(
   connect(mapStateToProps, { getUserProfile, getStatus, updateStatus, savePhoto, saveProfile }),
   withRouter,
-  // withAuthRedirect
+  // withAuthRedirect-----заменена инструкцией this.props.history.push("/login")
 )(ProfileContainer)
 
 

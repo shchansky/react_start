@@ -36,12 +36,15 @@ export const initializeAPP = () => (dispatch) => {
     // promise.then(() => {
     //     dispatch(initializedSuccess())
     // })
+    //после того как промис dispatch(getAuthUserData()) зарезолвится  он вернет нам промис, у которого будет доступен метод then (в противном случае если у промиса resolve не было, то метод then не выполнится)  и только после этого будет задиспатчитена ф-я  initializedSuccess() через метод  у промиса который вернулся
+
+
 
     Promise.all([promise])
         .then(() => {
             dispatch(initializedSuccess());
         })
-
+//если вдруг для аторизации нам необходимо сделать несколько независимых асинхронных диспатчей с асинхр. запросами на сервер и только после их завершения запустить инициализационный AC типа initializedSuccess(), применяем конструкцию Promise.all([promise]) вместо [promise] можно показать [promise1, promise2, promise3 .... ] заранее присвоив promise1, promise2, promise3 вызовы функций dispatch (.......)
 
 
 

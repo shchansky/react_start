@@ -31,6 +31,7 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 posts: [...state.posts, newPost],
                 newPostText: '',
+                //затирает поле формы ввода текста
             };
         };
         case SET_USER_PROFILE: {
