@@ -27,13 +27,6 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,               
-                // //или так users: [...state.users]
-                // users: state.users.map(u => {
-                //     if (u.id === action.userId) {
-                //         return { ...u, followed: true }
-                //     }
-                //     return u;
-                // })
                 users: updateObjectInArray (state.users,  action.userId, "id", {followed: true} )
             }
 
@@ -41,12 +34,6 @@ const usersReducer = (state = initialState, action) => {
         case UNFOLLOW:
             return {
                 ...state,
-                // users: state.users.map(u => {
-                //     if (u.id === action.userId) {
-                //         return { ...u, followed: false }
-                //     }
-                //     return u;
-                // })
                 users: updateObjectInArray (state.users,  action.userId, "id", {followed: false} )
             }
             
@@ -85,20 +72,6 @@ export const toggleFollowingProgress = (isFetching, userId) => ({ type: TOGGLE_I
 
 
 
-
-
-
-
-
-// export const requestUsers = (currentPage, pageSize) => (dispatch) => {
-//     dispatch(toggleIsFetching(true));
-//     dispatch(setCurrentPage(currentPage));
-//     usersAPI.getUsers(currentPage, pageSize).then(data => {
-//         dispatch(setUsers(data.items));
-//         dispatch(setTotalUsersCount(data.totalCount));
-//         dispatch(toggleIsFetching(false));
-//     });
-// }
 export const requestUsers = (currentPage, pageSize) => async (dispatch) => {
     dispatch(toggleIsFetching(true));
     dispatch(setCurrentPage(currentPage));

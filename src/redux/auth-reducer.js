@@ -9,7 +9,7 @@ let initialState = {
     email: null,
     login: null,
     isAuth: false,
-    captchaUrl: null //если null значит капча не обязательна
+    captchaUrl: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -45,7 +45,6 @@ export const getCaptchaUrlSuccess = (captchaUrl) => ({ type: GET_CAPTCHA_URL_SUC
 
 
 export const getAuthUserData = () => async (dispatch) => {
-    //getAuthUserData вызывается также в app-reducer, он диспатчить в sate isAuth: true , таким образом логизация подверждается
     let response = await authAPI.me();
     if (response.data.resultCode === 0) {
         let { id, email, login } = response.data.data
@@ -53,16 +52,6 @@ export const getAuthUserData = () => async (dispatch) => {
     }
 }
 
-// export const login = (email, password, rememberMe) => (dispatch) => {
-//     return authAPI.login(email, password, rememberMe).then(response => {
-//         if (response.data.resultCode === 0) {
-//             dispatch(setAuthUserData())
-//         } else {
-//             let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
-//             dispatch(stopSubmit("login", { _error: message }))
-//         }
-//     });
-// }
 export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
     let response = await authAPI.login(email, password, rememberMe, captcha);
     if (response.data.resultCode === 0) {
@@ -73,13 +62,11 @@ export const login = (email, password, rememberMe, captcha) => async (dispatch) 
 
         if (response.data.resultCode === 10) {
             //response.data.resultCode === 10 ----число 10 взято с докуиентации в пдф и применяется для капчи
-            dispatch (getCaptchaUrl())
+            dispatch(getCaptchaUrl())
         }
 
         let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
         dispatch(stopSubmit("login", { _error: message }))
-        //stopSubmit импопртируется из redux-form и необходим для останова отправки данных с формы; "login" это уникальное название формы в файле Login.js, которое приводится при оборачивании хоком reduxForm целевой компоненты возвращающей тег <form />; { _error: message }--- _error -форма получает ОБЩУЮ ОШИБКУ на всю систему(т.е. всю форму); в message прилетает текст ошибки с сервера потом этот message диспатчиьтся stopSubmit в форму "login" в файле Login.js
-        //если вместо _error указать поле формы, соответсвующее атрибуту name и вместо message  указать в "" кастомный текст сообщения, то ошибка вылезет в этом поле, но так лучше делать т.к. это подсказка хакерам--ПОСМОТРИ ЕЩЕ КОД в FormControl
     }
 }
 
@@ -97,8 +84,6 @@ export const getCaptchaUrl = () => async (dispatch) => {
     let response = await securityAPI.getCaptchaUrl();
     const captchaUrl = response.data.url
     dispatch(getCaptchaUrlSuccess(captchaUrl))
-    //getCaptchaUrl дергается  в коде thunk-creator login
-
 }
 
 

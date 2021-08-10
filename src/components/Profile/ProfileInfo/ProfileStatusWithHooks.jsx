@@ -2,42 +2,26 @@ import React, { useState, useEffect } from 'react';
 import classes from './ProfileInfo.module.css';
 
 
-// let arr=[0, () => {}]
-// let [a, setA]=arr 
 
 const ProfileStatusWithHooks = (props) => {
 
-
-
-    let [editMode, setEditMode] = useState(false);
+     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
-
     useEffect(() => { setStatus (props.status)}, [props.status])
-
-
-
-  
+ 
     const activateEditMode = () => {
         setEditMode(true);
     }
-
 
     const deactiveEditMode = () => {
         setEditMode(false);
         props.updateStatus(status);
     }
-
-
-
     const onStatusChange = (e) => {
 
         setStatus(e.currentTarget.value)
 
     }
-
-
-
-
 
     return (
         <div>
@@ -56,11 +40,7 @@ const ProfileStatusWithHooks = (props) => {
             }
         </div>
     )
-
 }
-
-
-
 
 
 export default ProfileStatusWithHooks

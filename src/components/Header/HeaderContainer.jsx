@@ -5,8 +5,6 @@ import { logout } from '../../redux/auth-reducer';
 
 class HeaderContainer extends React.Component {
 
-//асинхронный запрос для отображения Header удалил, и реализовал его в App.js
-
     render() {
         return < Header {...this.props} />
     }

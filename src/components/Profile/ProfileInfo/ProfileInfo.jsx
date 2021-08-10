@@ -11,50 +11,35 @@ const ProfileInfo = ({ savePhoto, saveProfile, ...props }) => {
 
 
     let [editMode, setEditMode] = useState(false);
-//при editMode === false выходим из режима редактирования
-
-
-
     if (!props.profile) {
         return <Preloader />
     }
-
     const onMainPhotoSelected = (e) => {
         if (e.target.files.length) {
             savePhoto(e.target.files[0])
         }
     }
-
-    const  onSubmit =  (formData) => {
-      const promise = saveProfile(formData)
-      promise.then (() => {setEditMode(false) })          
+    const onSubmit = (formData) => {
+        const promise = saveProfile(formData)
+        promise.then(() => { setEditMode(false) })
     }
-//formData -это данные полученные в поле store.form; с помощью handleSubmit дфнные пакуются в один объект
     return (
         <div>
             <div className={classes.descriptionBlock}>
                 <img src={props.profile.photos.large || userPhoto} className={classes.mainPhoto} />
-                {props.isOwner && <label className={classes.userPhotoLabel}>
-                    <input className={classes.userPhotoFormInput} type={'file'} onChange={onMainPhotoSelected} />
-                    <span className={classes.userPhotoFormBtn}>Load foto</span>
-                </label>}
-
-
+                {props.isOwner &&
+                    <label className={classes.userPhotoLabel}>
+                        <input className={classes.userPhotoFormInput} type={'file'} onChange={onMainPhotoSelected} />
+                        <span className={classes.userPhotoFormBtn}>Load foto</span>
+                    </label>}
                 {editMode
                     ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
-                    //у любой формы есть есть событие onSubmit которое указывается в виде атрибута; onSubmit={props.handleSubmit}, где handleSubmit - это callback из библиотеки redux-form который прилетает в props для целевой компоненты, которая обернута контейнерной reduxForm
                     : <ProfileData goToEditMode={() => { setEditMode(true) }} profile={props.profile} isOwner={props.isOwner} />}
-
-
-
-                {/* <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>   */}
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
             </div>
         </div>
     )
 }
-
-
 
 
 const ProfileData = ({ profile, goToEditMode, ...props }) => {
@@ -84,12 +69,6 @@ const ProfileData = ({ profile, goToEditMode, ...props }) => {
         </div>
     )
 }
-
-
-
-
-
-
 
 
 

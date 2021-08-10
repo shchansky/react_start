@@ -9,7 +9,6 @@ const instance = axios.create({
         "API-KEY": "6bf479bf-fcae-4561-a59e-07ba9dc0a182"
     }
 });
-//благодаря withCredentials: true, наша кука цепляется к запросу с http://localhost:3000/ на другой домен и этот домен понимает что мы авторизованы
 
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
@@ -25,9 +24,7 @@ export const usersAPI = {
         return instance.delete(`follow/${userId}`)
     },
     getProfile(userId) {
-        // return instance.get(`profile/` + userId)
 
-        //или так
         console.warn('Obsolete method. Pleas used profileAPI object.')
         return profileAPI.getProfile(userId)
     },
@@ -67,11 +64,9 @@ export const authAPI = {
     },
     login(email, password, rememberMe = false, captcha = null) {
         return instance.post(`auth/login`, { email, password, rememberMe, captcha })
-        //входим в систему, сервер сохранил куку с email, password ,rememberMe
     },
     logout() {
         return instance.delete(`auth/login`)
-        //вылогиниваемся, сервер удаляет куку
     }
 }
 

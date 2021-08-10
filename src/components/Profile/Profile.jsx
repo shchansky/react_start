@@ -6,14 +6,8 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 
 
-
-
-
-
 const Profile = (props) => {
-
   return (
-
     <div className={classes.content}>
       <ProfileInfo profile={props.profile}
         status={props.status}
@@ -22,11 +16,8 @@ const Profile = (props) => {
         savePhoto={props.savePhoto} 
         saveProfile={props.saveProfile}/>
       <MyPostsContainer />
-
-
     </div>
   )
-
 }
 
 

@@ -9,7 +9,7 @@ import LoginPage from './components/Login/Login';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { Route, withRouter } from 'react-router-dom';
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { initializeAPP, initialized } from './redux/app-reducer';
@@ -19,21 +19,22 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { withSuspense } from './hoc/withSuspense';
 
-// import DialogsContainer from './components/Dialogs/DialogsContainer';
-const DialogsContainer = React.lazy (() => import('./components/Dialogs/DialogsContainer'));
-// import ProfileContainer from './components/Profile/ProfileContainer';
-const ProfileContainer = React.lazy (() => import('./components/Profile/ProfileContainer'));
 
-
-
-
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 
 class App extends React.Component {
+ catchAllUnhandledRejectErrors = (promiseRejectionEvent) => {
+   console.error(promiseRejectionEvent)
+ }
   componentDidMount() {
     this.props.initializeAPP();
+    window.addEventListener ("unhandledrejection", this.catchAllUnhandledRejectErrors  )
   }
-
+  componentWillUnmount () {
+    window.removeEventListener ("unhandledrejection", this.catchAllUnhandledRejectErrors  )
+  }
   render() {
     if (!this.props.initialized) {
       return <Preloader />
@@ -43,20 +44,12 @@ class App extends React.Component {
           <HeaderContainer />
           <Navbar />
           <div className='app-wrapper-content'>
-
-            <Route path='/profile/:userId?' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <ProfileContainer /> </React.Suspense> } } />
-
-            
-            {/* <Route path='/dialogs' render={() => {return <React.Suspense fallback ={ <Preloader/> }  > <DialogsContainer /> </React.Suspense> } } /> */}
-            <Route path='/dialogs' render={withSuspense (DialogsContainer)} />
-
-
-
-            <Route path='/users' render={() => <UsersContainer />} />
-            <Route path='/login' render={() => <LoginPage />} />
-            <Route path='/news' render={() => <News />} />
-            <Route path='/music' render={() => <Music />} />
-            <Route path='/settings' render={() => <Settings />} />
+            <Switch>
+              <Route path='/profile/:userId?' render={() => { return <React.Suspense fallback={<Preloader />}  > <ProfileContainer /> </React.Suspense> }} />
+              <Route path='/dialogs' render={withSuspense(DialogsContainer)} />
+              <Route path='/users' render={() => <UsersContainer />} />
+              <Route path='/login' render={() => <LoginPage />} />
+            </Switch>
           </div>
         </div>
       )
@@ -64,29 +57,15 @@ class App extends React.Component {
   }
 }
 
-
 let mapStateToProps = (state) => {
   return {
     initialized: state.app.initialized
   }
 }
-
 let AppContainer = compose(
   withRouter,
   connect(mapStateToProps, { initializeAPP }))(App)
-//обертка из withRouter является фишкой кода, если не сделать Preloader будет крутиться даже когда данные придут с сервера
 
-
-
-
-
-// const JSApp = (props) => {
-//   return <BrowserRouter>
-//     <Provider store={store} >
-//       <AppContainer />
-//     </Provider>
-//   </BrowserRouter>
-// }
 const JSApp = (props) => {
   return <HashRouter>
     <Provider store={store} >
@@ -94,5 +73,4 @@ const JSApp = (props) => {
     </Provider>
   </HashRouter>
 }
-
 export default JSApp

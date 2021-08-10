@@ -31,7 +31,6 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 posts: [...state.posts, newPost],
                 newPostText: '',
-                //затирает поле формы ввода текста
             };
         };
         case SET_USER_PROFILE: {
@@ -55,14 +54,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profile: { ...state.profile, photos: action.photos }
             }
-
         }
-
-
 
         default: return state;
     }
-}
+}  
 
 export const addPostActionCreator = (newPostText) => ({ type: ADD_POST, newPostText })
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile: profile })
@@ -70,38 +66,17 @@ export const setStatus = (status) => ({ type: SET_STATUS, status })
 export const deletePost = (postId) => ({ type: DELETE_POST, postId })
 export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos })
 
-
-
-// export const getUserProfile = (userId) => (dispatch) => {
-//     usersAPI.getProfile(userId).then(response => {
-//         dispatch(setUserProfile(response.data));
-//     });
-// }
 export const getUserProfile = (userId) => async (dispatch) => {
     let response = await usersAPI.getProfile(userId);
     dispatch(setUserProfile(response.data));
 }
 
-
-
-// export const getStatus = (userId) => (dispatch) => {
-//     profileAPI.getStatus(userId).then(response => {
-//         dispatch(setStatus(response.data));
-//     });
-// }
 export const getStatus = (userId) => async (dispatch) => {
     let response = await profileAPI.getStatus(userId);
     dispatch(setStatus(response.data));
 }
 
 
-// export const updateStatus = (status) => (dispatch) => {
-//     profileAPI.updateStatus(status).then(response => {
-//         if (response.data.resultCode === 0) {
-//             dispatch(setStatus(status));
-//         }
-//     });
-// }
 export const updateStatus = (status) => async (dispatch) => {
     let response = await profileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
@@ -109,20 +84,12 @@ export const updateStatus = (status) => async (dispatch) => {
     }
 }
 
-
-
-
-
 export const savePhoto = (file) => async (dispatch) => {
     let response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos));
     }
 }
-
-
-
-
 
 export const saveProfile = (profile) => async (dispatch, getState) => {
     const userId = getState().auth.userId
@@ -132,22 +99,8 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
         dispatch(getUserProfile(userId));
     } else {
         dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }));
-        //_error -это общее сообщение об ошибке в библиотеке (приходит в response от сетвера см. Network/Responce) в форму; edit-profile это название формы ProfileDataReduxForm котрая оборачивает целевую к-ту ProfileDataForm в файле ProfileDataForm.js 
-        //"edit-profile" - это название у формы, в нее прилетит пропс error
-
-
-
-        //альтернативный хардкодовый вариант-cообщение выводим в поле facebook при наличии в нем ошибки. Домашка -надо распарсить строку (contacts и facebook- то что содержится в атрибуте name у input-см.инспектор элементов )
-        // dispatch(stopSubmit("edit-profile", { "contacts": {"facebook": response.data.messages[0] }   }))
-
-
-
-        return Promise.reject (response.data.messages[0])
-        //изменения в форме не сохраняются в случае ошибки
+        return Promise.reject(response.data.messages[0])
     }
 }
-
-
-
 
 export default profileReducer

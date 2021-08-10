@@ -22,19 +22,13 @@ let initialState = {
 
 
 const messagesReducer = (state = initialState, action) => {
-
-
-
     switch (action.type) {
-
-            
         case SEND_MESSAGE:
             let body = action.newMessageBody;
-            return  {
+            return {
                 ...state,
                 messages: [...state.messages, { id: 6, message: body }],
             };
-            
 
         default:
             return state;
@@ -43,8 +37,5 @@ const messagesReducer = (state = initialState, action) => {
 
 
 export const updateSendMessageCreator = (newMessageBody) => ({ type: SEND_MESSAGE, newMessageBody })
-
-
-
 
 export default messagesReducer
